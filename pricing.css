@@ -18,3 +18,22 @@ html {
 .card-deck .card {
   min-width: 220px;
 }
+
+
+ /* Style for the carousel */
+ #userSlider {
+  margin-top: 20px;
+}
+
+/* Style for carousel items */
+.carousel-item {
+  padding: 20px;
+  text-align: center;
+  height: 200px;
+}
+
+/* Style for highlighted plan */
+.carousel-item.active {
+  background-color: #007bff; 
+  color: #fff;
+}
