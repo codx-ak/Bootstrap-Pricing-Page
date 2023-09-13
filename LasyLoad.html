@@ -18,7 +18,7 @@
         </div>
         
         <!-- Spinner -->
-        <div id="Spinner" class="d-flex text-center justify-content-center  invisible p-2 m-4">
+        <div id="Spinner" class="d-flex text-center justify-content-center p-2 m-4">
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -27,21 +27,24 @@
 
     <script>
         const resultsContainer = document.getElementById('results-container');
-        const Spinner = document.getElementById('Spinner');
+        const loader = document.getElementById('Spinner');
         let page = 1; // Initial page
         const resultsPerPage = 6; // Number of results to load per page
-        let loading = false; // To prevent multiple simultaneous requests
+        let loading = false;
 
         // Function to fetch and display results
         function fetchResults() {
-            if (loading) return; // Prevent multiple requests
-            loading = true;
+            if (loading) return;
+                loading = true;
+
+                loader.style.display = 'flex'; // Display loading spinner
+
 
             fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${resultsPerPage}`)
                 .then(response => response.json())
                 .then(data => {
-                    loading = false;
-                    Spinner.classList.replace("visible","invisible")
+                    loading=false
+                    loader.style.display = 'none'; // Hide loading spinner
 
                     // Check if there are more results
                     if (data.length === 0) {
@@ -56,11 +59,11 @@
                         Template.classList = "card m-2 shadow-sm overflow-hidden"
                         Template.style = "width:350px"
                         const posttitle = document.createElement('h5')
-                        posttitle.classList = 'card-header my-0 font-weight-normal'
+                        posttitle.classList = 'card-header bg-white h-25 text-truncate my-0 font-weight-normal'
                         posttitle.innerText = post.title
 
                         const postbody = document.createElement('p')
-                        postbody.classList = "card-body"
+                        postbody.classList = "card-body text-muted text-justify"
                         postbody.innerText = post.body
 
                         Template.appendChild(posttitle);
@@ -80,8 +83,6 @@
         // Function to check if the user has reached the bottom of the page
         function onScroll() {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-
-            Spinner.classList.replace("invisible","visible")
             setInterval(fetchResults,3000)
             }
         }
